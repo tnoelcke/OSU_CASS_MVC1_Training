@@ -7,9 +7,9 @@
 - [x] Passing The View a model
 
 ## Futre Topics (not covered in this presentation)
-- [] Data Binding
-- [] templates
-- [] Views
+- [ ] Data Binding
+- [ ] templates
+- [ ] Views
 
 
 ## What is MVC?
