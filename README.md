@@ -6,7 +6,7 @@
 - [x] Routing Conventions
 - [x] Passing The View a model
 
-## Futre Topics (not covered in this presentation)
+## Future Topics (not covered in this presentation)
 - [ ] Data Binding
 - [ ] templates
 - [ ] Views
