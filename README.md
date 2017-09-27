@@ -1,6 +1,30 @@
 # MVC Introduction
 
-## Presentation starts with a breif Powerpoint presentation on what MVC is.
+## Topics
+- [x] What Is MVC?
+- [x] ASP.NET Specifics.
+- [x] Routing Conventions
+- [x] Passing The View a model
+
+## Futre Topics (not covered in this presentation)
+- [] Data Binding
+- [] templates
+- [] Views
+
+
+## What is MVC?
+    MVC (Model, View, Controller) is a design pattern that compartmentalizes the design of an application
+    in to three distict parts. 
+### Model
+
+### View
+
+### Controller
+
+### How Components Inter Act with eachother
+
+### Advantages of MVC.
+
 
 ## ASP.NET MVC Specifics
 
@@ -112,3 +136,18 @@ If you are unfermiller with object oriented programing view link shown bellow.
 
 (Repalce with Link for Object Oriented tutorial)
 
+## Routing Conventinos Conventions
+
+### Routing Table
+
+### Conventional Routing
+
+### Atribute Routing
+
+## Passing your model to your view and generating your first web page.
+
+### Creating Your View (real Quick)
+
+### Rendering your view in the Controller (With model)
+
+### Checking your work.
