@@ -3,8 +3,9 @@
 ## Topics
 - [x] What Is MVC?
 - [x] ASP.NET Specifics.
+- [x] Project Structure
 - [x] Routing Conventions
-- [x] Passing The View a model
+- [x] Itro To views
 
 ## Future Topics (not covered in this presentation)
 - [ ] Data Binding
@@ -152,6 +153,14 @@ Note: The Syntax for inheritence in C# is as follows
 If you are unfermiller with object oriented programing view link shown bellow.
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming
+
+## Project Structure
+
+### Models
+
+### Views
+
+### Controllers
 
 ## Routing Conventions
  - Convential Routing

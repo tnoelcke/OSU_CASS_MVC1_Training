@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace MVCTraining.Models
 {
@@ -17,4 +18,5 @@ namespace MVCTraining.Models
         //who is teaching the class.
         public string instructor { get; set; }
     }
+
 }
