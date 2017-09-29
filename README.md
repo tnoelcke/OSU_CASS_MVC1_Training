@@ -156,11 +156,14 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object
 
 ## Project Structure
 
+    If you want to explor the basic project structure Open the MVCTraining.sln file in Visual Studio.
+
 ### Models
-
+    Models go in the the model file. If you decide to use the entity frame work later this will make life esier.
 ### Views
-
+    Put view in the view folder in a sub folder with the name of the controller that they will be called from.
 ### Controllers
+    Controllers go in the controller folder. This makes life way easier when it comes time to do routeing do this and you will spend next to no time doing the routeing as every thing is already there waiting for you. You may need to make minor ajustments to the default routing but generally you can piggie back of the degault routeing.
 
 ## Routing Conventions
  - Convential Routing
@@ -203,15 +206,32 @@ The MapRoute function:
         defaults: new {//Paramater defaults}      
     );
 ```
-By useing paramater defaults you are saying that the paramaters in the url for the routing need to match the defaults.
+By useing paramater defaults we can specify what the default value for that URL is if a value is not provided. For instnace:
+ "someController" would really give us
+ "someContrller/Index" because if no value is proved for actino it replaces it with 
+ the default value (index).
 
 calling MapRoute adds a new entry to the routing table.
 note the order in which these enteries are added maters as you can have
-entries overlap. If that happens the one that is first in the routing list will be called.
+entries overlap. For instance in the example above if we put the special controller after the default controller it will never get run because it will always use the default case. So you want to put special cases before more general cases.
+
+### Why the default case works
+
+```C#
+    routes.MapRoute(
+        name: "Default",
+        url: "{controller}/{action}/{id}",
+        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+    );
+```
+Consider the code above. This works beacuse its looking for a controller in the first url paramater. If there is a value it looks for this controller and runs the default value if no value is provided for the action. If a value is provided for the action it goes to the controller and tries to find the action. The last paramater id is optional. For some items that require an id you will get a 401 error if you don't provide an id.
+
+This routing convention is why you want to place the controller in the controller file in the solution because other wise it will not find your controller. Also you will want to name each action in your controller after the action you are taking.
 
 ### Show demo where we use convention based routing to serve our app.
 
-
+For this section look in the RouteConfig.cs File in the App_Start folder
+in the Visual Basic Solution.
 
 
 ### Atribute Routing
