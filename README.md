@@ -16,15 +16,32 @@
     MVC (Model, View, Controller) is a design pattern that compartmentalizes the design of an application
     in to three distict parts. 
 ### Model
-
+    The Model is the Data. This data should represent all the data and bussiness logic needed to solve
+    the particular problem you are working on.
 ### View
-
+    This is what the end user will see and interact with. The view displays the data and makes
+    requests back to the controller to manipulate the data. Note that the view shouldn't directly
+    work with the model.
 ### Controller
-
+    The Controller is what connects the dots between the View and the model. The Controller handles requests
+    from the user and uses that to manpulate the model. Business logic should not happen in the controller,
+    this should happen in the model.
 ### How Components Inter Act with eachother
+    
+    ![] (Pictures/mvc-architecrture)
+    Figure 1: How the various MVC components interact.
+
+    ![] (Pictures/request-handling-in-mvc)
+    figure 2: Request handling in C# MVC
+
+    Source: http://www.tutorialsteacher.com/mvc/mvc-architecture
 
 ### Advantages of MVC.
+    - Ease of Development
+    - Makes parellel development easy.
+    - Seperating logic makes resulting code simpler.
 
+Though MVC is a Great Arictecture type. It can't solve every problem.
 
 ## ASP.NET MVC Specifics
 
@@ -49,7 +66,7 @@ The Models in ASP.NET MVC are just C# models similar to the one shown below.
 
 In ASP.NET There are all sorts of cool things you can do with the models that
 allow you tons of flexibility. However this is a topic for a future lecture so
-stay tunned.
+stay tunned (data binding).
 
 ### View
 
@@ -134,13 +151,59 @@ Note: The Syntax for inheritence in C# is as follows
 
 If you are unfermiller with object oriented programing view link shown bellow.
 
-(Repalce with Link for Object Oriented tutorial)
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming
 
-## Routing Conventinos Conventions
+## Routing Conventions
+ - Convential Routing
+ - Atribute Routing
 
 ### Routing Table
+Regardless of what type of routeing convention you use you are simply adding entries into a routeing table. 
 
 ### Conventional Routing
+    In convential routing you manually enter routes into the routing table.
+    This approches the problem as a generally case first then more specific routes you would like to handle. For instance to set up a routing table you might use the code below:
+
+```C#
+    public static void RegisterRoutes(RouteCollection routes){
+        
+        //ignore this tokanized structure and process the URL normally.
+        routes.IgnoreRoute("resource.axd/{*pathInfo}");
+
+        routes.MapRoute(
+            name: "Special",
+            url: "Special/{id},
+            defaults: new {controller = "Home", action = "Index", id = UrlParaqmter.Optional}
+        ); // Route: /Special/12
+
+        //general Routes.    
+        routes.MapRoute(
+            name: "Default",
+            url: "{controller}/{action}/{id}",
+            defaults: new {controller = "Home", action = "Index", id = UrlPatameter.optional}
+        ); //Route: /Home/Index/12
+
+        
+    }
+```
+The MapRoute function:
+```C#
+    routes.MapRoute(
+        name: //name of the route,
+        url: //URL Pattern
+        defaults: new {//Paramater defaults}      
+    );
+```
+By useing paramater defaults you are saying that the paramaters in the url for the routing need to match the defaults.
+
+calling MapRoute adds a new entry to the routing table.
+note the order in which these enteries are added maters as you can have
+entries overlap. If that happens the one that is first in the routing list will be called.
+
+### Show demo where we use convention based routing to serve our app.
+
+
+
 
 ### Atribute Routing
 
