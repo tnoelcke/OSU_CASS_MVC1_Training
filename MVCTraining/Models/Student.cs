@@ -11,7 +11,7 @@ namespace MVCTraining.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public List<Class> ClastList { get; set; }
+        public virtual ICollection<Class> ClassList { get; set; }
 
     }
 }

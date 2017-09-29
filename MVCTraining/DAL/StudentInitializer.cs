@@ -25,6 +25,24 @@ namespace MVCTraining.DAL
             classes.ForEach(c => context.Classes.Add(c));
             context.SaveChanges();
 
+
+            var CsSenior = new List<Class>();
+            var Freshman = new List<Class>();
+            var PHD = new List<Class>();
+
+            CsSenior.AddRange(classes.FindAll(c => c.ID == 2 || c.ID == 4 || c.ID == 5));
+            Freshman.AddRange(classes.FindAll(c => c.ID == 1 || c.ID == 3 || c.ID == 6));
+            PHD.Add(classes.Find(c => c.ID == 7));
+
+            var students = new List<Student>()
+            {
+                new Student {ID = 1, FirstName = "Generic", LastName = "Freshmen", Address = "Some Doorm on Campus", ClassList = Freshman },
+                new Student {ID = 2, FirstName = "Generic", LastName = "LastName", Address = "Some Appartment Near Campus", ClassList = CsSenior},
+                new Student {ID = 3, FirstName = "PHD", LastName = "Student", Address = "Some where with in 30 miles", ClassList = PHD }
+            };
+
+            students.ForEach(s => context.Students.Add(s));
+            context.SaveChanges();
             
         }
     }
