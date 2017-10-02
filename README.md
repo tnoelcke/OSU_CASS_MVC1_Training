@@ -67,7 +67,8 @@ The Models in ASP.NET MVC are just C# models similar to the one shown below.
 
 In ASP.NET There are all sorts of cool things you can do with the models that
 allow you tons of flexibility. However this is a topic for a future lecture so
-stay tunned (data binding).
+stay tunned (data binding). Also there maybe future lectures on the entity frame work
+which allows for easy storage of your data in a database.
 
 ### View
 
@@ -122,30 +123,70 @@ Important note:
 Shown Below is a typical example of a very simple controller. This example came from the Empty ASP.NET MVC template.
 
 ```C#
-     public class HomeController : Controller
+namespace MVCTraining.Controllers
+{
+    public class ClassesController : Controller
     {
+        private StudentContext db = new StudentContext();
+
+        // GET: Classes
         public ActionResult Index()
         {
+            return View(db.Classes.ToList());
+        }
+
+        // GET: Classes/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Class @class = db.Classes.Find(id);
+            if (@class == null)
+            {
+                return HttpNotFound();
+            }
+            return View(@class);
+        }
+
+        // GET: Classes/Create
+        public ActionResult Create()
+        {
             return View();
         }
 
-        public ActionResult About()
+        // POST: Classes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,identifier,courseName,instructor")] Class @class)
         {
-            ViewBag.Message = "Your application description page.";
+            if (ModelState.IsValid)
+            {
+                db.Classes.Add(@class);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(@class);
         }
     }
+}
 ```
-Note: The Syntax for inheritence in C# is as follows
+### Controller simatics
 
+Note that you should group your controllers by what they resent.
+For instnace if you have a controller that deals with users you should call it
+Users. Your names should be descriptive.
+
+Also notice that each function represents and action you can take that pertains to the
+data that controller represents. You sould also make these names descriptive. For instance
+if you have an edit personal info for a page you should call the action for that function
+edit.
+
+Note: The Syntax for inheritence in C# is as follows
 ```C#
     public class ChildCLass : ParentClass {...}
 ```
@@ -234,12 +275,72 @@ For this section look in the RouteConfig.cs File in the App_Start folder
 in the Visual Basic Solution.
 
 
+
 ### Atribute Routing
+
+Atribute routing also makes entries to the routing table however it allows us to do this
+closer to the action that this route represents.
+
+An example of Attribute routeting is shown below.
+
+```C#
+         // GET: Classes
+        [Route("Classes/Index")]
+        public ActionResult Index()
+        {
+            return View(db.Classes.ToList());
+        }
+```
+
+### Atribute Routing and Paramaters.
+Like conventional routing atribute routing also allows us to
+set up a paramater for the URL that we can use in the controller.
+
+```C#
+     // GET: Classes/Details/5
+        [Route("Classes/Details/{id}")]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Class @class = db.Classes.Find(id);
+            if (@class == null)
+            {
+                return HttpNotFound();
+            }
+            return View(@class);
+        }
+```
+This allows us to pass paramaters to our action in our controllers.
+
+Notice we can also add constraints to a paramater so a route will require
+the paramater to be a certain data type.
+
+```C#
+    [Route("Classes/Details/{id:int})]
+```
+
+You can also set a prefix for a controller.
+
+```C#
+    [RoutePrefix("Users)]
+    public class UsersController : Controller
+    {
+        [Route("Index)]
+        public ActionResult Index(){
+            return View(db.Users.ToList());
+        }
+        ...
+    }
+```
+
+This allows you to group like actions together with out having to addit
+to each individual actions route.
+
 
 ## Passing your model to your view and generating your first web page.
 
-### Creating Your View (real Quick)
+### quick demo showing a controller passing a view.
 
-### Rendering your view in the Controller (With model)
-
-### Checking your work.

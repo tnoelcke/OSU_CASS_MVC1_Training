@@ -15,12 +15,15 @@ namespace MVCTraining
 
             //routes.MapMvcAttributeRoutes(); //Enables atribute routing.
 
+            //Add openeing Comment here for Attribute routing demo.
+
             //This one works because it comes before your default route.
             routes.MapRoute(
                 name: "Special",
                 url: "Classes",
                 defaults: new {controller = "Classes", Action = "Details", id = 1}
             );
+
 
             //This route looks for the patern String/String/?id (could be string or int)
             routes.MapRoute(
@@ -35,6 +38,8 @@ namespace MVCTraining
                 url: "Students",
                 defaults: new {controller = "Students", Action = "Details", id = 1 }
             );
+            
+            //Place Closing comment here for 
         }
     }
 }
