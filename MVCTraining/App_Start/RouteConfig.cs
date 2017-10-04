@@ -13,10 +13,10 @@ namespace MVCTraining
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapMvcAttributeRoutes(); //Enables atribute routing.
+            routes.MapMvcAttributeRoutes(); //Enables atribute routing.
 
             //Add openeing Comment here for Attribute routing demo.
-
+            
             //This one works because it comes before your default route.
             routes.MapRoute(
                 name: "Special",
@@ -38,6 +38,7 @@ namespace MVCTraining
                 url: "Students",
                 defaults: new {controller = "Students", Action = "Details", id = 1 }
             );
+            
             
             //Place Closing comment here for 
         }

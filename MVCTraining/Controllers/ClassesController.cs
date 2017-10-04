@@ -9,19 +9,25 @@ using System.Web.Mvc;
 using MVCTraining.DAL;
 using MVCTraining.Models;
 
+
 namespace MVCTraining.Controllers
 {
+    [RoutePrefix("Classes")]
     public class ClassesController : Controller
     {
         private StudentContext db = new StudentContext();
 
+        
         // GET: Classes
+        //[Route("")] //sets this as default route for controller Route: Users 
+        //[Route("Index", Order = 2)] //Route: Users/Index Why doesn't this work?
         public ActionResult Index()
         {
             return View(db.Classes.ToList());
         }
 
         // GET: Classes/Details/5
+        //[Route("{id}", Order = 1)] //Why doesn't this work?
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +43,7 @@ namespace MVCTraining.Controllers
         }
 
         // GET: Classes/Create
+        //[Route("Create")]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +52,7 @@ namespace MVCTraining.Controllers
         // POST: Classes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,identifier,courseName,instructor")] Class @class)
@@ -60,6 +68,7 @@ namespace MVCTraining.Controllers
         }
 
         // GET: Classes/Edit/5
+        //[Route("Edit/{id}")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +86,7 @@ namespace MVCTraining.Controllers
         // POST: Classes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,identifier,courseName,instructor")] Class @class)
@@ -91,6 +101,7 @@ namespace MVCTraining.Controllers
         }
 
         // GET: Classes/Delete/5
+        //[Route("Delete/{id}")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,7 +117,8 @@ namespace MVCTraining.Controllers
         }
 
         // POST: Classes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [Route("Delete/{id}")]
+        //[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
