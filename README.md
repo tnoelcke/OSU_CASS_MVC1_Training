@@ -316,19 +316,22 @@ set up a paramater for the URL that we can use in the controller.
 This allows us to pass paramaters to our action in our controllers.
 
 Notice we can also add constraints to a paramater so a route will require
-the paramater to be a certain data type.
+the paramater to be a certain data type. We can also specify optional
+paramaters using the ?.
 
 ```C#
     [Route("Classes/Details/{id:int})]
+
+    [Route("Classes/Details/{id?})]
 ```
 
 You can also set a prefix for a controller.
 
 ```C#
-    [RoutePrefix("Users)]
+    [RoutePrefix("Users")]
     public class UsersController : Controller
     {
-        [Route("Index)]
+        [Route("Index)] //Route: Users/Index
         public ActionResult Index(){
             return View(db.Users.ToList());
         }
@@ -336,11 +339,129 @@ You can also set a prefix for a controller.
     }
 ```
 
-This allows you to group like actions together with out having to addit
+This allows you to group like actions together with out having to add it
 to each individual actions route.
 
+You can also specify names and orders for routes using Atribute routing.
+One thing to keep in mind when using Atribute routing is that order still matters.
+```C#
+[RoutePrefix("Users")]
+public class HomeController : Controller
+{
+
+    [Route("Index", Name="UsersIndex, Order = 2)]
+    public ActionResult Index() {...}
+
+    [Route("{id}", Name = "UsersDetails", Order = 1)]
+    public ActionResult Details(int id) {...}
+
+}
+```
+
+If we look at the example above the route of "/Users/Index" We will get an error. This is because it matches
+the user details route which is of a higher order. If you do not specify an order the order which the enteries are entereed into the routeing table in the order they apear.
+
+We can solve the error above either by changing the order or by adding a constraint to the UserDetails route.
+
+
+You can also specify a default route for the application
+
+```C#
+    [Route("~/")] //this is the default action for the entire application.
+    [Route("")] //specifies default route for route prefix.
+```
+
+### Atribute Routing Demo
+
+For this demo go to the StudentsController the attribute routes will be commented out.
+You will also need to go to the the route config page and comment out the convention based
+routing.
+
+### Convention Routing vs Atribute Routing
+
+Convention based routeing is less flexible however for most MVC applications if you follow
+the naming conventions you get the routing for free.
+
+However Atribute routing is much more flexible and for larger applications may be preferable to
+Convention based routing because all the routes will be near the actions that the represent.
+
+In the end it really comes down to preference.
 
 ## Passing your model to your view and generating your first web page.
 
 ### quick demo showing a controller passing a view.
 
+Go to the Classes Controller and view the action for Details. You will notice the following code.
+
+```C#
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Class @class = db.Classes.Find(id);
+            if (@class == null)
+            {
+                return HttpNotFound();
+            }
+            return View(@class);
+        }
+```
+You will notice we are getting a single Class model (like we saw earlier) and
+passing it to the view.
+
+If you go to the view for Classes/Details you will see the following razor page:
+
+``` cshtml
+    @model MVCTraining.Models.Class
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Class</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.identifier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.identifier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.courseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.courseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.instructor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.instructor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+```
+
+The most important thing to note here is that we are able to pass a typed model to the view
+we don't have to pass a JSON object or a generic object.
+
+## Sources
+https://msdn.microsoft.com/en-us/library/dd381412(v=vs.108).aspx
+https://exceptionnotfound.net/attribute-routing-vs-convention-routing/
+http://www.tutorialsteacher.com/mvc/mvc-architecture
