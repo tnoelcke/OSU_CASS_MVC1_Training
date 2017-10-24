@@ -5,12 +5,17 @@
 - [x] ASP.NET Specifics.
 - [x] Project Structure
 - [x] Routing Conventions
-- [x] Itro To views
+- [x] Passing a typed model to the view.
 
 ## Future Topics (not covered in this presentation)
 - [ ] Data Binding
 - [ ] templates
 - [ ] Views
+
+## useful References
+- Basic C# References: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/
+- C# Coding Conventions: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions
+- Getting started with MVC: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/getting-started
 
 
 ## What is MVC?
