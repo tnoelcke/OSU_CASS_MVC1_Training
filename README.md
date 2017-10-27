@@ -23,16 +23,22 @@
     in to three distict parts. 
 ### Model
     The Model is the Data. This data should represent all the data and bussiness logic needed to solve
-    the particular problem you are working on.
+    the particular problem you are working on. Now there is a whole world of how to store and manage this data.
+    For the pourposes of this training we will not be disscussing those items. We will mostly be disscussing
+    view models to reduce the scope of the disscussion. It still is important to know that you shouldn't be doing 
+    buissiness logic in your controller.
 ### View
     This is what the end user will see and interact with. The view displays the data and makes
     requests back to the controller to manipulate the data. Note that the view shouldn't directly
     work with the model.
 ### Controller
     The Controller is what connects the dots between the View and the model. The Controller handles requests
-    from the user and uses that to manpulate the model. Business logic should not happen in the controller,
-    this should happen in the model.
-### How Components Inter Act with eachother
+    In the form of URL's from the user and uses that to manpulate the model. Business logic should not happen in the controller,
+    this should happen in the model. Again for this disscision we will be using hard coded view models back at the controller. 
+    Typically you would actually go out to the model or the database and get the data you want and translate it to a view
+    model. However, this is outside the scope of this training.
+
+### How Components Interact with eachother
     
     ![] (Pictures/mvc-architecrture)
     Figure 1: How the various MVC components interact.
@@ -46,8 +52,10 @@
     - Ease of Development
     - Makes parellel development easy.
     - Seperating logic makes resulting code simpler.
+    - Testing testing testing. Seperating components makes writing clear simple unit test simple.
 
-Though MVC is a Great Arictecture type. It can't solve every problem.
+Though MVC is a Great Arictecture type. It can't solve every problem. Additionally there are a bunch of different
+variations on MVC.
 
 ## ASP.NET MVC Specifics
 
@@ -56,9 +64,9 @@ Though MVC is a Great Arictecture type. It can't solve every problem.
 The Models in ASP.NET MVC are just C# models similar to the one shown below.
 
 ```C#
-    public class Class
+    public class ClassViewModel
     {
-        //keeps track of a unique id. Useful later when binding data
+        //keeps track of a unique id. Useful when we want to store this information in a database.
         // and trying to query data.
         public int ID { get; set; }
         //Two lets and three digits that identifies what the class is ie: CS 325
@@ -72,13 +80,14 @@ The Models in ASP.NET MVC are just C# models similar to the one shown below.
 
 In ASP.NET There are all sorts of cool things you can do with the models that
 allow you tons of flexibility. However this is a topic for a future lecture so
-stay tunned (data binding). Also there maybe future lectures on the entity frame work
+stay tunned. Also there maybe future lectures on the entity frame work
 which allows for easy storage of your data in a database.
 
 ### View
 
 In ASP.NET MVC The view is a Razor page. Razor is a templeting engine and has lots of
-handy features. But razor is essentially a mix of HTML and C# (Hense .cshtml). We will also talk about templating however this will be in a future Lecture. Shown below is one of the views from am empty MCV Template.
+handy features. But razor is essentially a mix of HTML and C# (Hense .cshtml). We will also talk about templating however this will be in a future Lecture. Shown below is one of the views from am empty MCV Template. Make note its really Important how you manage
+your view names and location in the file system. This will become clear once we get to talking about routing.
 
 ```cshtml
  @{
@@ -182,21 +191,24 @@ namespace MVCTraining.Controllers
 ```
 ### Controller simatics
 
-Note that you should group your controllers by what they resent.
+Note that you should group your controllers by what actions they repersent.
 For instnace if you have a controller that deals with users you should call it
 Users. Your names should be descriptive.
 
 Also notice that each function represents and action you can take that pertains to the
 data that controller represents. You sould also make these names descriptive. For instance
 if you have an edit personal info for a page you should call the action for that function
-edit.
+edit. Addtionally, note that each controller returns an actionResult. This actionResult can
+be an HTML page, partial (Part of an HTML page), JSON, A document such as PDF or word and a ton
+of other options. Mostly your controllers will return HTML but its important to note that it can
+return other types of items as well.
 
 Note: The Syntax for inheritence in C# is as follows
 ```C#
     public class ChildCLass : ParentClass {...}
 ```
 
-If you are unfermiller with object oriented programing view link shown bellow.
+If you are unfamiliar with object oriented programing view link shown bellow.
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming
 
@@ -205,22 +217,28 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object
     If you want to explor the basic project structure Open the MVCTraining.sln file in Visual Studio.
 
 ### Models
-    Models go in the the model file. If you decide to use the entity frame work later this will make life esier.
+    Models go in the the model file as a convention. However there are many other ways to organize models.
 ### Views
-    Put view in the view folder in a sub folder with the name of the controller that they will be called from.
+    To take full advantage of the default routing you should name your view the same as the name of the
+    action you plan to use to return that view. You should also place that in a subfolder of the views directory
+    that has the same name. This becomes really important as it makes routeing really simple.
 ### Controllers
-    Controllers go in the controller folder. This makes life way easier when it comes time to do routeing do this and you will spend next to no time doing the routeing as every thing is already there waiting for you. You may need to make minor ajustments to the default routing but generally you can piggie back of the degault routeing.
+    Controllers go in the controller folder. This makes life way easier when it comes time to do routeing do this and you will spend next to no time doing the routeing as every thing is already there waiting for you. You may need to make minor ajustments to the default routing but generally you can piggie back off the degault routeing.
 
 ## Routing Conventions
  - Convential Routing
  - Atribute Routing
 
 ### Routing Table
-Regardless of what type of routeing convention you use you are simply adding entries into a routeing table. 
+Regardless of what type of routeing convention you use you are simply adding entries into a routeing table. The application
+then takes that rounte and tries to match it to one of the entries in the routing table. It will then preform the action listed
+in the first entry it finds in the table that matches.
 
 ### Conventional Routing
     In convential routing you manually enter routes into the routing table.
-    This approches the problem as a generally case first then more specific routes you would like to handle. For instance to set up a routing table you might use the code below:
+    This approches the problem as a generally case first then more specific routes you would like to handle. For instance to set up a routing table you might use the code shown below. Generally you won't need to make a ton of edits to the routing table if you
+    stick to convetions. Sticking to conventions will allow you to take advantage of the default routing. However, There may be
+    special cases you need to deal with so its important to know that you can deal with special cases in the RegisterRoutes function.
 
 ```C#
     public static void RegisterRoutes(RouteCollection routes){
@@ -258,8 +276,8 @@ By useing paramater defaults we can specify what the default value for that URL 
  the default value (index).
 
 calling MapRoute adds a new entry to the routing table.
-note the order in which these enteries are added maters as you can have
-entries overlap. For instance in the example above if we put the special controller after the default controller it will never get run because it will always use the default case. So you want to put special cases before more general cases.
+note the order in which these enteries are added matters as its just going to use the first route that matches the URL.
+For instance in the example above if we put the special controller after the default controller it will never get run because it will always use the default case. So you want to put special cases before more general cases.
 
 ### Why the default case works
 

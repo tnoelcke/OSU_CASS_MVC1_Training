@@ -27,7 +27,7 @@ namespace MVCTraining.Controllers
         }
 
         // GET: Classes/Details/5
-        //[Route("{id}", Order = 1)] //Why doesn't this work?
+        [Route("{id}", Order = 1)] //Why doesn't this work?
         public ActionResult Details(int? id)
         {
             if (id == null)

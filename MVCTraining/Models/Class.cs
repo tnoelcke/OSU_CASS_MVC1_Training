@@ -12,11 +12,10 @@ namespace MVCTraining.Models
         // and trying to query data.
         public int ID { get; set; }
         //Two lets and three digits that identifies what the class is ie: CS 325
-        public string identifier { get; set; } 
+        public string identifier { get; set; }
         //The course name
         public string courseName { get; set; }
         //who is teaching the class.
         public string instructor { get; set; }
     }
-
 }
