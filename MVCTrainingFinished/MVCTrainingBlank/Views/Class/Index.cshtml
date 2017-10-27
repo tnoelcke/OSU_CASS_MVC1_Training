@@ -1,0 +1,17 @@
+﻿@model List<MVCTrainingBlank.Models.ClassViewModel>
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Classes</h2>
+<div class="Classes Model">
+    @foreach(var Class in Model)
+    {
+        @Html.Display(Class.ClassName)
+        @Html.Display(Class.Designator)
+        @Html.Display(Class.Instructor)
+        @Html.Display(Class.numberOfCredits.ToString())
+    }
+</div>
+
+
