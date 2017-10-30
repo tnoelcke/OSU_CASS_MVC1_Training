@@ -1,17 +1,44 @@
-﻿@model List<MVCTrainingBlank.Models.ClassViewModel>
+﻿@model IEnumerable<MVCTrainingBlank.Models.ClassViewModel>
 @{
     ViewBag.Title = "View";
 }
 
 <h2>Classes</h2>
 <div class="Classes Model">
-    @foreach(var Class in Model)
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Designator)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numberOfCredits)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Instructor)
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
     {
-        @Html.Display(Class.ClassName)
-        @Html.Display(Class.Designator)
-        @Html.Display(Class.Instructor)
-        @Html.Display(Class.numberOfCredits.ToString())
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numberOfCredits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor)
+            </td>
+        </tr>
     }
+</table>
 </div>
 
 

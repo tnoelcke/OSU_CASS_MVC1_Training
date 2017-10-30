@@ -48,5 +48,20 @@ namespace MVCTrainingBlank.Controllers
 
             return View(classes);
         }
+
+        /// <summary>
+        /// Shows the details for an individual class.
+        /// </summary>
+        /// <returns>view for the individual class.</returns>
+        public ActionResult Details(int id)
+        {
+            //note here is where we would go out to the DB and get the data.
+            ClassViewModel toView = classes.Find(c => c.ID == id);
+            if(toView == null)
+            {
+                return View("Error");
+            }
+            return View(toView);
+        }
     }
 }
