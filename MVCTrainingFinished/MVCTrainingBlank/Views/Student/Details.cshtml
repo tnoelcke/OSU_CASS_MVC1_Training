@@ -1,0 +1,83 @@
+﻿@model MVCTrainingBlank.Models.StudentViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gpa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gpa)
+        </dd>
+    </dl>
+</div>
+@if (Model.Classes != null)
+{
+<div>
+    <h4> Classes </h4>
+    <table>
+       <tr>
+           <th>
+               @Html.DisplayNameFor(model => model.Classes.First().Designator)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Classes.First().ClassName)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Classes.First().numberOfCredits)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Classes.First().Instructor)
+           </th>
+           <th></th>
+       </tr>
+    @foreach (var item in Model.Classes)
+    {
+        <tr>
+            <td>
+            @Html.DisplayFor(modelItem => item.Designator)
+            </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numberOfCredits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Instructor)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Class", new { id = item.ID })
+        </td>
+       </tr> 
+    }
+    </table>
+</div>
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -34,7 +34,7 @@ namespace MVCTrainingBlank.Controllers
                 {
                     ID = 3,
                     Designator = "CS 161",
-                    ClassName = "Introduction To Programing",
+                    ClassName = "Introduction To Programming",
                     Instructor = "Bob",
                     numberOfCredits = 5
                 }
