@@ -9,7 +9,7 @@ namespace MVCTrainingBlank.Controllers
 {
     public class StudentController : Controller
     {
-        public List<StudentViewModel> students = new List<StudentViewModel>()
+        public static List<StudentViewModel> studentsList = new List<StudentViewModel>()
         {
             new StudentViewModel()
             {
@@ -67,18 +67,92 @@ namespace MVCTrainingBlank.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            List<StudentViewModel> students = this.students; 
+            List<StudentViewModel> students = studentsList; 
             return View(students);
         }
 
         public ActionResult Details(int id)
         {
-            StudentViewModel student = students.Find(s => s.Id == id);
+            StudentViewModel student = studentsList.Find(s => s.Id == id);
             if(student == null)
             {
                 return View("Error");
             }
             return View(student);
         }
+
+        // GET: Student/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Student/Create
+        [HttpPost]
+        public ActionResult Create(StudentViewModel model)
+        {
+            try
+            {
+                model.Id = studentsList.Last().Id + 1;
+                studentsList.Add(model);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+        // GET: Student/Edit/5
+        public ActionResult Edit(int id)
+        {
+            StudentViewModel model = studentsList.Find(s => s.Id == id);
+            if (model == null)
+            {
+                return View("Error");
+            }
+            return View(model);
+        }
+
+        // POST: Student/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, StudentViewModel model)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                studentsList.RemoveAll(s => s.Id == id);
+                studentsList.Add(model);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Student/Delete/5
+        public ActionResult Delete(int id)
+        {
+            StudentViewModel model = studentsList.Find(s => s.Id == id);
+            return View(model);
+        }
+
+        // POST: Student/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, StudentViewModel model)
+        {
+            try
+            {
+                studentsList.RemoveAll(s => s.Id == id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
     }
 }
